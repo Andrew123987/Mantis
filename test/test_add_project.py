@@ -1,6 +1,5 @@
 import uuid
 
-
 def test_add_project(app):
     app.session.login('administrator', 'root')
 

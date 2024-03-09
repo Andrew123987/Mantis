@@ -1,7 +1,6 @@
 import uuid
 from selenium.common.exceptions import NoSuchElementException
 
-
 def test_delete_project(app):
     app.session.login('administrator', 'root')
     app.project.move_to_projects_list()
