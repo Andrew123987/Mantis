@@ -12,8 +12,7 @@ def test_signup_new_account(app):
     email = username + '@localhost'
     password = 'test'
     app.james.ensure_exists(username, password)
-    app.signup.new_user(username, email, password)
-    app.session.login(username, password)
+    app.signup.new_user(email, username, password)
     assert app.session.is_logged_in_as(username)
     app.session.logout()
 
