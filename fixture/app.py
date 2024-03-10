@@ -1,14 +1,15 @@
 from selenium import webdriver
-
 from fixture.james import JamesHelper
 from fixture.mail import MailHelper
 from fixture.session_helper import SessionHelper
 from fixture.project_helper import ProjectHelper
 from fixture.signup import SignupHelper
+from fixture.soap import SoapHelper
 
 
 class App:
     def __init__(self, browser, config):
+        self.soap = SoapHelper(self)
         self.james = JamesHelper(self)
         self.project = ProjectHelper(self)
         self.session = SessionHelper(self)

@@ -2,7 +2,7 @@ import uuid
 from selenium.common.exceptions import NoSuchElementException
 
 
-def _delete_project(app):
+def test_delete_project(app):
     app.project.move_to_projects_list()
     a = str(uuid.uuid4())
     app.project.project_add(a)
