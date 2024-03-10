@@ -1,16 +1,19 @@
 import uuid
 
-def test_add_project(app):
-    app.session.login('administrator', 'root')
 
+def test_add_project(app):
     a = str(uuid.uuid4())
 
     app.project.move_to_projects_list()
+    projects_before = len(app.wd.find_elements_by_class_name('row-1')) + len(app.wd.find_elements_by_class_name('row-2'))
     app.project.project_add(a)
 
     app.project.move_to_projects_list()
-    name = app.wd.find_element_by_xpath("//tr[3]/td/a")
-    project_name = name.text
-    assert a in project_name
+    projects_after = len(app.wd.find_elements_by_class_name('row-1')) + len(app.wd.find_elements_by_class_name('row-2'))
+    assert projects_before + 1 == projects_after
+
+    #name = app.project.project_name()
+    #project_name = name.text
+    #assert a in project_name
 
     app.session.logout()

@@ -19,3 +19,7 @@ class ProjectHelper:
         wd.find_element_by_xpath('//tr[3]/td/a').click()
         wd.find_element_by_xpath('//input[3]').click()
         wd.find_element_by_xpath('//input[4]').click()
+
+    def project_name(self):
+        wd = self.app.wd
+        return wd.find_element_by_xpath("//tr[3]/td/a")

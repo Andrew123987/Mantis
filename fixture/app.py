@@ -4,11 +4,13 @@ from fixture.project_helper import ProjectHelper
 
 
 class App:
-    def __init__(self, browser, base_url):
+    def __init__(self, browser, base_url, username, password):
         self.project = ProjectHelper(self)
         self.session = SessionHelper(self)
         self.base_url = base_url
         self.browser = browser
+        self.username = username
+        self.password = password
         if browser == 'firefox':
             self.wd = webdriver.Firefox()
         elif browser == 'chrome':

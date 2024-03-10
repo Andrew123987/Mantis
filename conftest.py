@@ -27,7 +27,10 @@ def app(request, config):
     global fixture
     browser = request.config.getoption('--browser')
     if fixture is None or not fixture.is_valid():
-        fixture = App(browser=browser, base_url=config['web']['base_url'])
+        fixture = App(browser=browser, base_url=config['web']['base_url'], password=config['web_admin']['password'],
+                      username=config['web_admin']['username'])
+    fixture.session.login(username=config['web_admin']['username'],
+                          password=config['web_admin']['password'])
     return fixture
 
 
@@ -61,6 +64,15 @@ def restore_server_configuration(host, username, password):
 def pytest_addoption(parser):
     parser.addoption('--browser', action='store', default='firefox')
     parser.addoption('--target', action='store', default='target.json')
+
+
+@pytest.fixture(scope='session', autouse=True)
+def stop(request):
+    def final():
+        fixture.stop()
+
+    request.addfinalizer(final)
+    return fixture
 
 # def pytest_generate_tests(metafunc):
 #    for fixture in metafunc.fixturenames:
