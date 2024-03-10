@@ -1,16 +1,20 @@
 from selenium import webdriver
+
+from fixture.james import JamesHelper
 from fixture.session_helper import SessionHelper
 from fixture.project_helper import ProjectHelper
 
 
 class App:
-    def __init__(self, browser, base_url, username, password):
+    def __init__(self, browser, config):
+        self.james = JamesHelper(self)
         self.project = ProjectHelper(self)
         self.session = SessionHelper(self)
-        self.base_url = base_url
+        self.config = config
+        self.base_url = config['web']['base_url']
         self.browser = browser
-        self.username = username
-        self.password = password
+        self.username = config['web_admin']['username']
+        self.password = config['web_admin']['password']
         if browser == 'firefox':
             self.wd = webdriver.Firefox()
         elif browser == 'chrome':
@@ -24,7 +28,7 @@ class App:
         ##self.wd = webdriver.Firefox(options=options) ## Включение headless режима
         ##self.wd = webdriver.Firefox()
         self.wd.implicitly_wait(5)
-        self.wd.get(base_url)
+        self.wd.get(self.base_url)
 
     def is_valid(self):
         try:
