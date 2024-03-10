@@ -1,12 +1,14 @@
 from telnetlib import Telnet
 
+
 class JamesHelper:
     def __init__(self, app):
         self.app = app
 
     def ensure_exists(self, username, password):
         james_config = self.app.config['james']
-        session = JamesHelper.Session(james_config['host'], james_config['port'], james_config['username'], james_config['password'])
+        session = JamesHelper.Session(james_config['host'], james_config['port'], james_config['username'],
+                                      james_config['password'])
         if session.is_users_registered(username):
             session.reset_password(username, password)
         else:
@@ -27,7 +29,6 @@ class JamesHelper:
 
         def write(self, text):
             self.telnet.write(text.encode('ascii'))
-
 
         def is_users_registered(self, username):
             self.write('verify %s\n' % username)

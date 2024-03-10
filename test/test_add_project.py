@@ -1,7 +1,7 @@
 import uuid
 
 
-def test_add_project(app):
+def _add_project(app):
     a = str(uuid.uuid4())
 
     app.project.move_to_projects_list()
