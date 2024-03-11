@@ -8,9 +8,9 @@ proj_name_raw = datetime.now()
 def test_add_new_project(app):
     app.project.move_to_manage_projects()
     old_list = app.project.move_to_projects_list()
-    proj_name = ("test " + str(proj_name_raw))[:-7]
-    app.project.add_new_project(Project(name=proj_name))
-    old_list.append(Project(name=proj_name))
+    project_name = ("test " + str(proj_name_raw))[:-7]
+    app.project.add_new_project(Project(name=project_name))
+    old_list.append(Project(name=project_name))
     new_list = app.project.move_to_projects_list()
     assert sorted(old_list, key=Project.id_or_max) == sorted(new_list, key=Project.id_or_max)
     app.session.logout()
