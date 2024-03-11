@@ -1,29 +1,24 @@
-import uuid
-from selenium.common.exceptions import NoSuchElementException
+from random import randrange
+from model.project_model import Project
 
 
-def _delete_project(app):
-    app.project.move_to_projects_list()
-    a = str(uuid.uuid4())
-    app.project.project_add(a)
-    projects_before = len(app.wd.find_elements_by_class_name('row-1')) + len(app.wd.find_elements_by_class_name('row-2'))
-
-    app.project.move_to_projects_list()
-    app.project.delete_project()
-
-    app.project.move_to_projects_list()
-    projects_after = len(app.wd.find_elements_by_class_name('row-1')) + len(app.wd.find_elements_by_class_name('row-2'))
-    assert projects_before - 1 == projects_after
+def test_delete_project(app):
+    old_list = app.project.move_to_projects_list()
+    index = randrange(len(old_list))
+    app.project.delete_by_index(index)
+    old_list.remove(old_list[index])
+    new_list = app.project.move_to_projects_list()
+    assert sorted(old_list, key=Project.id_or_max) == sorted(new_list, key=Project.id_or_max)
+    app.session.logout()
 
 
-
-    #try:
-    #    app.project.project_name()
-    #    name = app.project.project_name()
-    #    project_name = name.text
-    #    assert a not in project_name
-    #    raise NoSuchElementException("")
-    #except NoSuchElementException:
-    #    print('0 projects. Test passed')
-
+def test_delete_project_soap(app, config):
+    username, password = config['web_admin']['username'], config['web_admin']['password']
+    old_list = app.soap.get_projects_for_user(username=username, password=password)
+    app.project.move_to_manage_projects()
+    index = randrange(len(old_list))
+    app.project.delete_by_index(index)
+    old_list.remove(old_list[index])
+    new_list = app.soap.get_projects_for_user(username=username, password=password)
+    assert sorted(old_list, key=Project.id_or_max) == sorted(new_list, key=Project.id_or_max)
     app.session.logout()

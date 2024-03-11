@@ -9,14 +9,14 @@ from fixture.soap import SoapHelper
 
 class App:
     def __init__(self, browser, config):
+        self.base_url = config['web']['base_url']
         self.soap = SoapHelper(self)
         self.james = JamesHelper(self)
-        self.project = ProjectHelper(self)
+        self.project = ProjectHelper(self, base_url=config['web']['base_url'])
         self.session = SessionHelper(self)
         self.mail = MailHelper(self)
         self.signup = SignupHelper(self)
         self.config = config
-        self.base_url = config['web']['base_url']
         self.browser = browser
         self.username = config['web_admin']['username']
         self.password = config['web_admin']['password']
@@ -28,10 +28,6 @@ class App:
             self.wd = webdriver.Ie()
         else:
             raise ValueError('Unrecognized browser %s' % browser)
-        ##options = webdriver.FirefoxOptions()  ## Включение headless режима
-        ##options.add_argument('--headless')  ## Включение headless режима
-        ##self.wd = webdriver.Firefox(options=options) ## Включение headless режима
-        ##self.wd = webdriver.Firefox()
         self.wd.implicitly_wait(5)
         self.wd.get(self.base_url)
 

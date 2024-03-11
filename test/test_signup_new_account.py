@@ -16,5 +16,4 @@ def test_signup_new_account(app):
     assert app.soap.can_login(username, password)
     app.session.logout()
 
-
     #assert app.session.is_logged_in_as(username)
