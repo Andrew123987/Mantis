@@ -45,4 +45,5 @@ class App:
             wd.get(self.base_url)
 
     def stop(self):
+        self.session.logout()
         self.wd.quit()

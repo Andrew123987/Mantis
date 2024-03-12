@@ -73,6 +73,9 @@ def stop(request):
     request.addfinalizer(final)
     return fixture
 
+
+
+
 # def pytest_generate_tests(metafunc):
 #    for fixture in metafunc.fixturenames:
 #        if fixture.startswith('data_'):

@@ -8,7 +8,7 @@ class ProjectHelper:
         self.contact_cache = None
         self.base_url = base_url
 
-    def move_to_manage_projects(self):
+    def open_manage_projects(self):
         wd = self.app.wd
         if not wd.current_url.endswith("/manage_proj_page.php"):
             url = f'{self.base_url}/manage_proj_page.php'
@@ -16,9 +16,9 @@ class ProjectHelper:
         else:
             pass
 
-    def move_to_projects_list(self):
+    def get_projects_list(self):
         wd = self.app.wd
-        self.move_to_manage_projects()
+        self.open_manage_projects()
         list = []
         count = len(wd.find_elements_by_xpath('//table[@class="width100"][2]//tbody//tr'))
         try:
@@ -38,11 +38,11 @@ class ProjectHelper:
             return list
 
     def add_new_project(self, project):
-        self.move_to_manage_projects()
+        self.open_manage_projects()
         self.create_new_project_button()
         self.fill_project_form(project)
         self.add_project_button_in_form()
-        self.move_to_manage_projects()
+        self.open_manage_projects()
 
     def create_new_project_button(self):
         wd = self.app.wd
@@ -98,7 +98,7 @@ class ProjectHelper:
         self.open_project_by_index(index)
         self.delete_project_button_in_form()
         self.confirm_delete_button()
-        self.move_to_manage_projects()
+        self.open_manage_projects()
 
     def open_project_by_index(self, index):
         wd = self.app.wd
