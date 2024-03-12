@@ -19,6 +19,6 @@ def test_delete_project_soap(app, config):
     index = randrange(len(old_list))
     app.project.delete_by_index(index)
     old_list.remove(old_list[index])
-    time.sleep(5)
+    time.sleep(10)
     new_list = app.soap.get_projects_for_user(username=username, password=password)
     assert sorted(old_list, key=Project.id_or_max) == sorted(new_list, key=Project.id_or_max)
