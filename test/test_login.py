@@ -1,4 +1,4 @@
-def _login(app, config):
+def test_login(app):
     assert app.session.is_logged_in_as('administrator')
-    app.session.logout()
+    #app.session.logout()
 

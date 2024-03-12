@@ -28,8 +28,8 @@ def app(request, config):
     browser = request.config.getoption('--browser')
     if fixture is None or not fixture.is_valid():
         fixture = App(browser=browser, config=config)
-    fixture.session.login(username=config['web_admin']['username'],
-                          password=config['web_admin']['password'])
+    fixture.session.ensure_login(username=config['web_admin']['username'],
+                                 password=config['web_admin']['password'])
     return fixture
 
 
@@ -72,9 +72,6 @@ def stop(request):
 
     request.addfinalizer(final)
     return fixture
-
-
-
 
 # def pytest_generate_tests(metafunc):
 #    for fixture in metafunc.fixturenames:
