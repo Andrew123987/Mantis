@@ -10,6 +10,7 @@ from fixture.soap import SoapHelper
 class App:
     def __init__(self, browser, config):
         self.base_url = config['web']['base_url']
+        self.service = config['soap']['address']
         self.soap = SoapHelper(self)
         self.james = JamesHelper(self)
         self.project = ProjectHelper(self, base_url=config['web']['base_url'])

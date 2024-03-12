@@ -2,7 +2,7 @@ from random import randrange
 from model.project_model import Project
 
 
-def test_delete_project(app):
+def _delete_project(app):
     old_list = app.project.get_projects_list()
     index = randrange(len(old_list))
     app.project.delete_by_index(index)
@@ -12,7 +12,7 @@ def test_delete_project(app):
     app.session.logout()
 
 
-def _delete_project_soap(app, config):
+def test_delete_project_soap(app, config):
     username, password = config['web_admin']['username'], config['web_admin']['password']
     old_list = app.soap.get_projects_for_user(username=username, password=password)
     app.project.open_manage_projects()
